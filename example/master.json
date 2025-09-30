@@ -92,7 +92,7 @@
     "when": "isInDiffEditor"
   },
   {
-    "key": "ctrl+shift+f",
+    "key": "ctrl+shift+i",
     "command": "editor.action.formatDocument",
     "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
   },
@@ -107,10 +107,21 @@
   {
     "key": "escape",
     "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus || explorerViewletFocus"
+    "when": "terminalFocus || explorerViewletFocus || inlineChatFocus || chatInputHasFocus"
   },
   {
-    "key": "ctrl+f",
-    "command": "actions.find"
+    "key": "escape",
+    "command": "workbench.view.explorer",
+    "when": "searchViewletFocus"
+  },
+  {
+    "_info": "Quick file open",
+    "key": "ctrl+shift+r",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "_info": "Open GitHub Copilot Chat or focus if already opened",
+    "key": "alt+a",
+    "command": "workbench.panel.chat.view.copilot.focus"
   }
 ]
