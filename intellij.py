@@ -1,4 +1,5 @@
 import glob
+import platform
 from pathlib import Path
 from typing import Dict, Any
 
@@ -37,12 +38,28 @@ CLEAR_OUT_ACTION_IDS = [
 def find_user_keymap_dirs() -> list[str]:
     home = Path.home()
     results = []
+    system = platform.system()
 
-    # Generic .config JetBrains locations
-    cfg_glob = str(home / '.config' / 'JetBrains' / '*' / 'keymaps')
-    for p in glob.glob(cfg_glob):
-        results.append(str(Path(p).resolve()))
-
+    if system == 'Windows':
+        # Windows locations for JetBrains IDEs
+        appdata = home / 'AppData' / 'Roaming' / 'JetBrains'
+        if appdata.exists():
+            # Look for all JetBrains IDE directories
+            cfg_glob = str(appdata / '*' / 'keymaps')
+            for p in glob.glob(cfg_glob):
+                results.append(str(Path(p).resolve()))
+        
+        # Also check Local AppData (some versions use this)
+        local_appdata = home / 'AppData' / 'Local' / 'JetBrains'
+        if local_appdata.exists():
+            cfg_glob = str(local_appdata / '*' / 'keymaps')
+            for p in glob.glob(cfg_glob):
+                results.append(str(Path(p).resolve()))
+    else:
+        # Generic .config JetBrains locations (Linux/macOS)
+        cfg_glob = str(home / '.config' / 'JetBrains' / '*' / 'keymaps')
+        for p in glob.glob(cfg_glob):
+            results.append(str(Path(p).resolve()))
     return results
 
 def get_target_keymap_files() -> list[str]:
