@@ -44,11 +44,13 @@
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "alt+left",
+    "_info": "Back navigation, same as in browsers ( In vscode it is not supported currently, but behaves like this by default )",
+    "key": ["alt+left", "mousebutton4"],
     "command": "workbench.action.navigateBack"
   },
   {
-    "key": "alt+right",
+    "_info": "Forward navigation, same as in browsers ( In vscode it is not supported currently, but behaves like this by default )",
+    "key": ["alt+right", "mousebutton5"],
     "command": "workbench.action.navigateForward"
   },
   {
@@ -83,6 +85,7 @@
     "command": "workbench.files.action.showActiveFileInExplorer"
   },
   {
+    "_info": "Reopen closed editor, same as in browsers",
     "key": "ctrl+shift+t",
     "command": "workbench.action.reopenClosedEditor"
   },

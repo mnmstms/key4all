@@ -28,7 +28,22 @@ def find_keybindings_files() -> list[str]:
 def generate(master_config: Dict) -> str:
     # Generate the json content for VS Code keybindings based on the master config
     cfg: Any = master_config
-    return json.dumps(list(cfg), indent=2, ensure_ascii=False) + "\n"
+    
+    entires: List[Dict[str, Any]] = []
+    for entry in cfg:
+        keys = entry.get('key')
+        if not isinstance(keys, list):
+            keys = [keys]
+        for key in keys:
+            binding = {
+                "key": key,
+                "command": entry['command']
+            }
+            if 'when' in entry:
+                binding["when"] = entry['when']
+            entires.append(binding)
+    
+    return json.dumps(entires, indent=2, ensure_ascii=False) + "\n"
 
 
 if __name__ == '__main__':
