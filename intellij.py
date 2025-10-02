@@ -3,6 +3,8 @@ import platform
 from pathlib import Path
 from typing import Dict, Any
 
+TOOL_NAME = "intellij"
+
 CLEAR_OUT_ACTION_IDS = [
     "Console.TableResult.CopyAggregatorResult",
     "CopyAbsolutePath",
@@ -74,22 +76,36 @@ def _convert_key_to_intellij_format(key: str) -> str:
 
 def _convert_action_id(action: str) -> str:
     case_map = {
-        "editor.action.triggerParameterHints": "ParameterInfo",
-        "workbench.action.closeActiveEditor": "CloseContent",
+        "editor.action.triggerParameterHints": "ParameterInfo",        
+        
+        "editor.action.copyLinesDownAction": "DuplicateLines",
         "editor.action.commentLine": "CommentByLineComment",
         "editor.action.deleteLines": "EditorDeleteLine",
         "editor.action.moveLinesUpAction": "MoveLineUp",
         "editor.action.moveLinesDownAction": "MoveLineDown",
+        
+        "workbench.action.closeActiveEditor": "CloseContent",
+        "workbench.action.reopenClosedEditor": "ReopenClosedTab",
         "workbench.action.navigateBack": "Back",
         "workbench.action.navigateForward": "Forward",
+        "editor.action.goToImplementation": "GotoImplementation",
+        
         "editor.action.joinLines": "EditorJoinLines",
+        "editor.action.rename": "RenameElement",
+        
         "editor.action.toggleWordWrap": "EditorToggleUseSoftWraps",
-        "editor.action.copyLinesDownAction": "DuplicateLines",
+        
         "workbench.action.terminal.toggleTerminal": "ActivateTerminalToolWindow",
         "workbench.action.focusActiveEditorGroup": "FocusEditor",
         "workbench.view.explorer": "ActivateProjectToolWindow",
+        "workbench.files.action.showActiveFileInExplorer": "SelectInProjectView",
         "actions.find": "Find",
-        "workbench.action.reopenClosedEditor": "ReopenClosedTab",
+        "workbench.action.findInFiles": "FindInPath",
+        
+        "editor.action.jumpToBracket": "EditorMatchBrace",
+        "workbench.action.showCommands": "GotoAction",
+        "editor.action.formatDocument": "ReformatCode",
+        "workbench.panel.chat.view.copilot.focus": "copilot.chat.show",
     }
     return case_map.get(action, None)
 
@@ -101,12 +117,15 @@ def generate(master_config: Dict) -> str:
     for action_id in CLEAR_OUT_ACTION_IDS:
         intellij_actions.append(f'  <action id="{action_id}">\n  </action>')
 
-    for shortcut in master_config:
-        action_id = _convert_action_id(shortcut.get("command"))
-        if not action_id:
-            print(f"Warning: No IntelliJ action mapping for VS Code action '{shortcut.get('command')}', skipping...")
+    for entry in master_config:
+        if '_tool' in entry and entry['_tool'] != TOOL_NAME:
             continue
-        keys = shortcut.get("key")
+        
+        action_id = _convert_action_id(entry.get("command"))
+        if not action_id:
+            print(f"Warning: No IntelliJ action mapping for VS Code action '{entry.get('command')}', skipping...")
+            continue
+        keys = entry.get("key")
         if not isinstance(keys, list):
             keys = [keys]
         

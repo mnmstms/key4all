@@ -90,12 +90,13 @@
     "command": "workbench.action.reopenClosedEditor"
   },
   {
+    "_tool": "vscode",
     "key": "f12",
     "command": "workbench.files.action.showActiveFileInExplorer",
     "when": "isInDiffEditor"
   },
   {
-    "key": "ctrl+shift+i",
+    "key": "ctrl+alt+i",
     "command": "editor.action.formatDocument",
     "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
   },
@@ -113,6 +114,8 @@
     "when": "terminalFocus || explorerViewletFocus || inlineChatFocus || chatInputHasFocus"
   },
   {
+    "_info": "In vscode the search hides the explorer, so escape should bring back the explorer",
+    "_tool": "vscode",
     "key": "escape",
     "command": "workbench.view.explorer",
     "when": "searchViewletFocus"
@@ -126,5 +129,21 @@
     "_info": "Open GitHub Copilot Chat or focus if already opened",
     "key": "alt+a",
     "command": "workbench.panel.chat.view.copilot.focus"
+  },
+  {
+    "_info": "Go to pairing bracket",
+    "key": "alt+p",
+    "command": "editor.action.jumpToBracket",
+    "when": "editorTextFocus"
+  },
+  {
+    "_info": "Open palette/all search",
+    "key": "ctrl+shift+p",
+    "command": "workbench.action.showCommands"
+  },
+  {
+    "_info": "Open serach in file",
+    "key": "ctrl+shift+f",
+    "command": "workbench.action.findInFiles"
   }
 ]

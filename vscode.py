@@ -4,6 +4,8 @@ from typing import Dict, List, Any
 import json
 import glob
 
+TOOL_NAME = "vscode"
+
 def find_keybindings_files() -> list[str]:
     system = platform.system()
     home = Path.home()
@@ -27,10 +29,12 @@ def find_keybindings_files() -> list[str]:
 
 def generate(master_config: Dict) -> str:
     # Generate the json content for VS Code keybindings based on the master config
-    cfg: Any = master_config
     
     entires: List[Dict[str, Any]] = []
-    for entry in cfg:
+    for entry in master_config:
+        if '_tool' in entry and entry['_tool'] != TOOL_NAME:
+            continue
+        
         keys = entry.get('key')
         if not isinstance(keys, list):
             keys = [keys]
