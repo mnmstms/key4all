@@ -68,13 +68,34 @@ def get_target_keymap_files() -> list[str]:
     return [ dir+'/key4all.xml' for dir in find_user_keymap_dirs() ]
 
 def _convert_key_to_intellij_format(key: str) -> str:
+    """
+    Convert a VS Code keybinding to IntelliJ format.
+    Spaces instead of pluses, mousebuttonX to buttonX, and modifier order is: shift ctrl alt
+    """
     if key.startswith('mousebutton'):
         return key.replace('mousebutton', 'button')
+    
+    # Normalize modifier order: shift ctrl alt
+    modifiers = []
+    if 'shift+' in key:
+        modifiers.append('shift')
+        key = key.replace('shift+', '')
+    if 'ctrl+' in key:
+        modifiers.append('ctrl')
+        key = key.replace('ctrl+', '')
+    if 'alt+' in key:
+        modifiers.append('alt')
+        key = key.replace('alt+', '')
+        
+    key = '+'.join(modifiers + [key])
     
     key = key.replace('+', ' ')
     return key
 
 def _convert_action_id(action: str) -> str:
+    if action.startswith('native:'):
+        return action[len('native:'):]
+    
     case_map = {
         "editor.action.triggerParameterHints": "ParameterInfo",        
         

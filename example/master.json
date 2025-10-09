@@ -18,11 +18,7 @@
     "key": "ctrl+p",
     "command": "editor.action.triggerParameterHints",
     "when": "editorHasSignatureHelpProvider && editorTextFocus"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "workbench.action.findInFiles"
-  },
+  },  
   {
     "key": "alt+shift+r",
     "command": "editor.action.rename",
@@ -142,8 +138,19 @@
     "command": "workbench.action.showCommands"
   },
   {
-    "_info": "Open serach in file",
+    "_info": "Open serach in files",
     "key": "ctrl+shift+f",
     "command": "workbench.action.findInFiles"
+  },
+  {
+    "_info": "Open find in editor",
+    "key": "ctrl+f",
+    "command": "actions.find"
+  },
+  {
+    "_info": "Open find and replace in editor",
+    "_tool": "intellij",
+    "key": "ctrl+f",
+    "command": "native:Replace"
   }
 ]
