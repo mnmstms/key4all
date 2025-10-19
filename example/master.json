@@ -18,7 +18,7 @@
     "key": "ctrl+p",
     "command": "editor.action.triggerParameterHints",
     "when": "editorHasSignatureHelpProvider && editorTextFocus"
-  },  
+  },
   {
     "key": "alt+shift+r",
     "command": "editor.action.rename",
@@ -92,7 +92,7 @@
     "when": "isInDiffEditor"
   },
   {
-    "key": "ctrl+alt+i",
+    "key": "ctrl+alt+f",
     "command": "editor.action.formatDocument",
     "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
   },
@@ -152,5 +152,15 @@
     "_tool": "intellij",
     "key": "ctrl+f",
     "command": "native:Replace"
+  },
+  {
+    "_info": "Run (debug)",
+    "key": "alt+shift+d",
+    "command": "workbench.action.debug.start"
+  },
+  {
+    "_info": "Run (without debugging)",
+    "key": "alt+shift+x",
+    "command": "workbench.action.debug.run"
   }
 ]
